@@ -26,12 +26,17 @@ function pickMeta(html: string, key: string): string | null {
 
 function cleanTitle(s: string) {
   return decodeHtmlEntities(s)
+    .replace(/&#39;/g, "'")        // ← これを追加
+    .replace(/&apos;/g, "'")       // ← 念のため
+    .replace(/&quot;/g, '"')
     .trim()
-    .replace(/をApple Musicで.*$/i, "")  // ←これ追加
-    .replace(/- Apple Music.*$/i, "")    // ←これ追加（保険）
+    .replace(/をApple Musicで.*$/i, "")
+    .replace(/- Apple Music.*$/i, "")
     .replace(/^[「『“"”]+/, "")
     .replace(/[」』”"]+$/, "")
     .replace(/\s+/g, " ");
+}
+
 }
 
 
