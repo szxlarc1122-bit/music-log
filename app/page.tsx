@@ -168,27 +168,23 @@ export default function Page() {
         }
       }
 
-      if (t && a) {
-        const newItem: LogItem = {
-          id: uid(),
-          title: t,
-          artist: a,
-          note: "",
-          tags: [],
-          rating: 3,
-          createdAt: Date.now(),
-          sourceUrl,
-          appleTrackId: appleTrackId ?? undefined,
-        };
-        setItems((prev) => [newItem, ...prev]);
-        setAppleUrl("");
-        setSyncMsg("新しい一曲を追加したよ。");
-      } else {
-        // 入力欄に流し込んで手で直してもらう
-        if (t) setTitle(t);
-        if (a) setArtist(a);
-        setSyncMsg("情報は取れたけど分解が微妙かも。必要なら少し直してね。");
-      }
+if (t && a) {
+  // すでに入力欄に流し込むだけ：メモ/タグ/評価はあなたが入れてから「追加」
+  setTitle(t);
+  setArtist(a);
+
+  // 取り込み欄は空にする
+  setAppleUrl("");
+
+  setSyncMsg("取り込んだよ。メモやタグ、評価を決めて「追加」してね。");
+} else {
+  // 入力欄に流し込めるものだけ流し込む（分解が微妙な時）
+  if (t) setTitle(t);
+  if (a) setArtist(a);
+
+  setSyncMsg("情報は取れたけど分解が微妙かも。必要なら少し直してね。");
+}
+
     } catch {
       setSyncMsg("通信でつまずいたみたい。もう一回だけ試してみて。");
     }
